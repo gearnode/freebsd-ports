@@ -1,0 +1,12 @@
+bin/pgcopydb
+man/man1/pgcopydb clone.1.gz
+man/man1/pgcopydb copy.1.gz
+man/man1/pgcopydb dump.1.gz
+man/man1/pgcopydb follow.1.gz
+man/man1/pgcopydb fork.1.gz
+man/man1/pgcopydb list.1.gz
+man/man1/pgcopydb restore.1.gz
+man/man1/pgcopydb snapshot.1.gz
+man/man1/pgcopydb stream.1.gz
+man/man1/pgcopydb.1.gz
+man/man5/pgcopydb.5.gz
