@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+# $FreeBSD$
+#
+# PROVIDE: gerrit
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following line to /etc/rc.conf to enable the Gerrit daemon:
+# gerrit_enable (bool):    Set it to "YES" to enable gerrit.
+#               Default is "NO".
+# gerrit_home (str):       gerrit
+#               Default is ""
+# gerrit_args (str):       Extra flags passed to gerrit.
+#               Default is ""
+# gerrit_site (str):       description
+#               Default is ""
+# gerrit_user (str):       Gerrit deamon user.
+#               Default is "%%GERRIT_USER%%"
+# gerrit_conf (path):      Gerrit configuration file.
+#               Default is "${PREFIX}/etc/gerrit.config"
+
+. /etc/rc.subr
+
+name="gerrit"
+rcvar="gerrit_enable"
+load_rc_config $name
+
+${gerrit_enable:="NO"}
+${gerrit_home:="%%GERRIT_HOME%%"}
+${gerrit_agrs:=""}
+${gerrit_site:="%%GERRIT_HOME%%/%%GERRIT_SITE%%"}
+${gerrit_user:="%%GERRIT_USER%%"}
+
+command="/usr/sbin/daemon"
+pidfile="/var/run/${name}.pid"
+logfile="/var/log/${name}.log"
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+
+gerrit_start() {
+    echo "Starting gerrit..."
+    /usr/sbin/daemon -fc -P ${pidfile} -u ${gerrit_user} -o ${logfile} \
+                     %%PREFIX%%/bin/${name} ${gerrit_options}
+
+}
+
+gerrit_stop() {
+    pid=$(check_pidfile $pidfile $command)
+    if [ -n "${pid}" ]; then
+        echo "Stopping ${name} (pid=${pid})"
+        kill -- -${pid}
+        wait_for_pids ${pid}
+    else
+        echo "${name} isn't running"
+    fi
+}
+
+run_rc_command "$1"

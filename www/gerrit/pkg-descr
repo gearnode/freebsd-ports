@@ -1,0 +1,7 @@
+Gerrit provides a framework you and your teams can use to review code
+before it becomes part of the code base. Gerrit works equally well in
+open source projects that limit the number of users who can approve
+changes (typical in open source software development) and in projects in
+which all contributors are trusted.
+
+WWW: https://www.gerritcodereview.com
